@@ -5,6 +5,7 @@
     <UserSecretsId>1d532565-1fda-4778-9bc2-52caa37403b6</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>

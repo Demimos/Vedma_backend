@@ -52,6 +52,7 @@ namespace Vedma_backend
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {

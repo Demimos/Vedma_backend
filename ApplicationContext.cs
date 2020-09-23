@@ -10,10 +10,12 @@ namespace Vedma_backend
     public class ApplicationContext : DbContext
     {
         public DbSet<CharSheet> CharSheets { get; set; }
+        public DbSet<Property> Properties { get; set; }
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
             Database.EnsureCreated();   // создаем базу данных при первом обращении
+            Database.Migrate();
         }
     }
 }

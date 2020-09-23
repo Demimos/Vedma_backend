@@ -26,7 +26,7 @@ namespace Vedma_backend.Controllers
         [HttpGet]
         public async Task<IEnumerable<CharSheet>> Get()
         {
-            return await Db.CharSheets.AsNoTracking().ToListAsync();
+            return await Db.CharSheets.Include(c => c.Properties).AsNoTracking().ToListAsync();
         }
 
         // GET api/<CharSheetController>/5

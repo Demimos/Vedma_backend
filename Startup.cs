@@ -18,6 +18,7 @@ namespace Vedma_backend
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -34,6 +35,16 @@ namespace Vedma_backend
             services.Configure<ForwardedHeadersOptions>(options =>
             {
                 options.KnownProxies.Add(IPAddress.Parse("127.0.0.1"));
+            });
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("*")
+                                       .AllowAnyHeader()
+                                       .AllowAnyMethod();
+                                  });
             });
             services.AddSwaggerDocument();
             services.AddControllers();
@@ -53,7 +64,7 @@ namespace Vedma_backend
 
             app.UseRouting();
             app.UseAuthentication();
-
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto

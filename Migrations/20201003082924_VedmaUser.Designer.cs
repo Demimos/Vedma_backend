@@ -10,8 +10,8 @@ using Vedma_backend;
 namespace Vedma_backend.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200923191324_Property")]
-    partial class Property
+    [Migration("20201003082924_VedmaUser")]
+    partial class VedmaUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,7 +34,12 @@ namespace Vedma_backend.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("CharSheets");
                 });
@@ -59,6 +64,33 @@ namespace Vedma_backend.Migrations
                     b.HasIndex("CharSheetId");
 
                     b.ToTable("Properties");
+                });
+
+            modelBuilder.Entity("Vedma_backend.Entity.VedmaUser", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("EMail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Vedma_backend.Entity.CharSheet", b =>
+                {
+                    b.HasOne("Vedma_backend.Entity.VedmaUser", "User")
+                        .WithMany("CharSheets")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Vedma_backend.Entity.Property", b =>

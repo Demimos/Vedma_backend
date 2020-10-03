@@ -3,10 +3,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Vedma_backend.Migrations
 {
-    public partial class Property : Migration
+    public partial class VedmaUser : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    EMail = table.Column<string>(nullable: true),
+                    Phone = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "CharSheets",
                 columns: table => new
@@ -14,11 +28,18 @@ namespace Vedma_backend.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CharSheets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CharSheets_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -42,6 +63,11 @@ namespace Vedma_backend.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_CharSheets_UserId",
+                table: "CharSheets",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Properties_CharSheetId",
                 table: "Properties",
                 column: "CharSheetId");
@@ -54,6 +80,9 @@ namespace Vedma_backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "CharSheets");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

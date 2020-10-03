@@ -11,6 +11,7 @@ namespace Vedma_backend
     {
         public DbSet<CharSheet> CharSheets { get; set; }
         public DbSet<Property> Properties { get; set; }
+        public DbSet<VedmaUser> Users { get; set; }
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {

@@ -11,5 +11,7 @@ namespace Vedma_backend.Entity
         public string Name { get; set; }
         public string Description { get; set; }
         public IEnumerable<Property> Properties {get; set;}
+        public Guid? UserId { get; set; }
+        public VedmaUser  User { get; set; }
     }
 }

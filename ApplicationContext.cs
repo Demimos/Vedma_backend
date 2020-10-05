@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Vedma_backend.Entity;
 
 namespace Vedma_backend
 {
-    public class ApplicationContext : DbContext
+    public class ApplicationContext : IdentityDbContext<AppUser>
     {
         public DbSet<CharSheet> CharSheets { get; set; }
         public DbSet<Property> Properties { get; set; }
@@ -16,6 +17,11 @@ namespace Vedma_backend
         {
             Database.EnsureCreated();   // создаем базу данных при первом обращении
             Database.Migrate();
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
         }
     }
 }

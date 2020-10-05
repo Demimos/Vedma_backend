@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ namespace Vedma_backend.Controllers
 
         // GET: api/<CharSheetController>
         [HttpGet]
+        [Authorize]
         public async Task<IEnumerable<CharSheet>> Get()
         {
             return await Db.CharSheets.AsNoTracking().ToListAsync();
@@ -40,6 +42,7 @@ namespace Vedma_backend.Controllers
 
         // POST api/<CharSheetController>
         [HttpPost]
+        [Authorize]
         public async Task Post([FromBody] CharSheet charSheet)
         {
             Db.CharSheets.Add(charSheet);
@@ -48,6 +51,7 @@ namespace Vedma_backend.Controllers
 
         // PUT api/<CharSheetController>/5
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<ActionResult> Put(int id, [FromBody] CharSheet charSheet)
         {
             var old = await Db.CharSheets.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
@@ -60,6 +64,7 @@ namespace Vedma_backend.Controllers
 
         // DELETE api/<CharSheetController>/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult> Delete(int id)
         {
             var charsheet = await Db.CharSheets.FirstOrDefaultAsync(c => c.Id == id);
